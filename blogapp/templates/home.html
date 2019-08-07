@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .first{
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+        {% extends 'base.html' %}
+
+        {% block content %}
+    <div class="first">
+        {% for blog in posts %}
+        <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{blog.title}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{blog.pub_date}}</h6>
+                  <p class="card-text">{{blog.summary}}</p>
+                  <a href="{% url 'detail' blog.id %}" class="card-link">...more</a>
+                </div>
+              </div>
+              <br>
+        {% endfor %}
+    </div>
+
+        <div class="container">
+            {# First Previous #}
+            {% if posts.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{posts.previous_page_number}}">Previous</a>
+            {% endif %}
+
+            {# 3of4 #}
+            <span>{{posts.number}}</span>
+            <span>of</span>
+            <span>{{posts.paginator.num_page}}</span>
+
+            {# Next Last #}
+            {% if posts.has_next %}
+            <a href="?page={{posts.next_page_number}}">Next</a>
+            <a href="?page={{posts.paginator.num_page}}">Last</a>
+            {% endif %}
+        </div>
+    
+        {% endblock %}
+    
+    
+</body>
+</html>
